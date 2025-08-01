@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dev
+  main:
+    #设置允许循环依赖
+    allow-circular-references: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - env
+          - loggers
+
+myapp:
+  auth:
+    token: "secret-key-from-myapp"
+    expire-timeout: 30m
+  feature-flags:
+    - new-dashboard-myapp
+    - experimental-api-myapp
