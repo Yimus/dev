@@ -7,9 +7,11 @@ import com.example.dev.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -26,18 +28,18 @@ public class UserController {
     public ResponseEntity<String> addUser(@RequestBody @Valid User user) {
         userService.save(user);
         LOGGER.info("add user:{}", user);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        return ResponseEntity.ok("success");
     }
 
     @GetMapping("/user/{name}")
-    public User getUser(@PathVariable String name) {
+    public ResponseEntity<List<User>> getUser(@PathVariable String name) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("name", name);
-        User user = userService.getOne(wrapper);
-        if (null == user) {
+        List<User> list = userService.list(wrapper);
+        if (CollectionUtils.isEmpty(list)) {
             throw new ResourceNotFoundException("User not found with name: " + name);
         }
-        LOGGER.info("get user:{}", user);
-        return user;
+        LOGGER.info("get user:{}", list);
+        return ResponseEntity.ok(list);
     }
 }

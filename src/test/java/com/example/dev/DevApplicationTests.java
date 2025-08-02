@@ -1,6 +1,7 @@
 package com.example.dev;
 
 import com.example.dev.dto.Earth;
+import com.example.dev.dto.Orders;
 import com.example.dev.dto.Sea;
 import com.example.dev.dto.User;
 import jakarta.annotation.Resource;
@@ -35,5 +36,13 @@ class DevApplicationTests {
         LOGGER.info("user id:{}", user.getId());
         LOGGER.info("user name:{}", user.getName());
         LOGGER.info("user email:{}", user.getEmail());
+
+        Orders orders = new Orders();
+        orders.setOrderId(1L);
+        orders.setName("test order");
+        orders.setUserId(1L);
+        LOGGER.info("order id:{}", orders.getOrderId());
+        LOGGER.info("order name:{}", orders.getName());
+        LOGGER.info("order user id:{}", orders.getUserId());
     }
 }

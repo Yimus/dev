@@ -6,6 +6,12 @@ dataSources:
     jdbcUrl: jdbc:mysql://192.168.3.7:6446/dev?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
     username: clusteradmin
     password: mypass
+    minimumIdle: 5
+    maximumPoolSize: 10
+    connectionTimeout: 30000
+    idleTimeout: 600000
+    maxLifetime: 1800000
+    registerMbeans: true
 
   ds0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
@@ -13,6 +19,12 @@ dataSources:
     jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
     username: clusteradmin
     password: mypass
+    minimumIdle: 5
+    maximumPoolSize: 10
+    connectionTimeout: 30000
+    idleTimeout: 600000
+    maxLifetime: 1800000
+    registerMbeans: true
 
   ds1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
@@ -20,6 +32,12 @@ dataSources:
     jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
     username: clusteradmin
     password: mypass
+    minimumIdle: 5
+    maximumPoolSize: 10
+    connectionTimeout: 30000
+    idleTimeout: 600000
+    maxLifetime: 1800000
+    registerMbeans: true
 
 # 规则配置
 rules:
