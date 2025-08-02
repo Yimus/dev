@@ -4,20 +4,29 @@ server:
 spring:
   application:
     name: dev
+
   main:
     #设置允许循环依赖
     allow-circular-references: true
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - health
-          - info
-          - metrics
-          - env
-          - loggers
+  # JMX配置
+  jmx:
+    enabled: true
+
+  datasource:
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:sharding-config.yml
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
 myapp:
   auth:
@@ -26,3 +35,20 @@ myapp:
   feature-flags:
     - new-dashboard-myapp
     - experimental-api-myapp
+
+# Spring Boot Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  jmx:
+    metrics:
+      export:
+        enabled: true

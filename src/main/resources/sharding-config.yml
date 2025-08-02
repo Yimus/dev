@@ -1,0 +1,60 @@
+# 数据源配置
+dataSources:
+  ds0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: clusteradmin
+    password: mypass
+
+  ds1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: clusteradmin
+    password: mypass
+
+# 分片规则配置
+rules:
+- !SHARDING
+  tables:
+    # 定义分片表
+    orders:
+      # 数据节点分布
+      actualDataNodes: ds$->{0..1}.orders_$->{0..1}
+      # 分表策略
+      tableStrategy:
+        standard:
+          shardingColumn: order_id
+          shardingAlgorithmName: table-inline
+      # 分库策略
+      databaseStrategy:
+        standard:
+          shardingColumn: user_id
+          shardingAlgorithmName: database-inline
+      # 定义主键生成策略
+      keyGenerateStrategy:
+        column: order_id
+        # 使用雪花算法
+        keyGeneratorName: snowflake_key_generator
+
+  keyGenerators:
+    snowflake_key_generator:
+      type: SNOWFLAKE
+      props:
+        worker-id: 1
+        max-vibration-offset: 1
+
+  # 定义分片算法
+  shardingAlgorithms:
+    database-inline:
+      type: INLINE
+      props:
+        algorithm-expression: ds$->{user_id % 2}
+    table-inline:
+      type: INLINE
+      props:
+        algorithm-expression: orders_$->{order_id % 2}
+
+props:
+  sql-show: true
