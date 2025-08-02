@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-public class Controller {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+public class UserController {
+    public static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
-    public Controller(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
