@@ -35,6 +35,6 @@ public class LoggingAspect {
 
     @AfterThrowing(pointcut = "execution(* com.example.dev.controller.*.*(..))", throwing = "ex")
     public void logAfterThrowingController(JoinPoint joinPoint, Throwable ex) {
-        LOGGER.error("-- {} throw exception {} --", joinPoint.getSignature().getName(), ex.getMessage());
+        LOGGER.error("-- {} throw exception--", joinPoint.getSignature().getName(), ex);
     }
 }

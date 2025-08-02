@@ -23,7 +23,7 @@ public class Controller {
     }
 
     @PostMapping("/user/add")
-    public ResponseEntity<String> hello(@RequestBody @Valid User user) {
+    public ResponseEntity<String> addUser(@RequestBody @Valid User user) {
         userService.save(user);
         LOGGER.info("add user:{}", user);
         return new ResponseEntity<>("success", HttpStatus.OK);

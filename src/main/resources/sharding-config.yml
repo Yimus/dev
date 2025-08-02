@@ -68,7 +68,7 @@ rules:
 - !SINGLE
   tables:
     # 指定单表存放的数据源
-    - "dev.users"
+    - "dev.user"
 
 
 props:
