@@ -1,5 +1,12 @@
 # 数据源配置
 dataSources:
+  dev:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://192.168.3.7:6446/dev?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: clusteradmin
+    password: mypass
+
   ds0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -14,8 +21,9 @@ dataSources:
     username: clusteradmin
     password: mypass
 
-# 分片规则配置
+# 规则配置
 rules:
+# 分片规则
 - !SHARDING
   tables:
     # 定义分片表
@@ -56,5 +64,14 @@ rules:
       props:
         algorithm-expression: orders_$->{order_id % 2}
 
+# 单表规则
+- !SINGLE
+  tables:
+    # 指定单表存放的数据源
+    - "dev.users"
+
+
 props:
   sql-show: true
+  # 允许范围查询（对于单表查询很重要）
+  sql-federation-type: ORIGINAL

@@ -29,8 +29,10 @@ class DevApplicationTests {
         LOGGER.info("sea name:{}", sea.getName());
 
         User user = new User();
+        user.setId(1L);
         user.setName("test user");
         user.setEmail("123");
+        LOGGER.info("user id:{}", user.getId());
         LOGGER.info("user name:{}", user.getName());
         LOGGER.info("user email:{}", user.getEmail());
     }
