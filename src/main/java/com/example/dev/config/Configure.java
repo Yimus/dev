@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 @EnableConfigurationProperties({MyAppConfig.class})
 public class Configure {
@@ -33,5 +34,4 @@ public class Configure {
 
         return interceptor;
     }
-
 }

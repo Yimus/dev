@@ -4,7 +4,6 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 
-
 @Component
 public class Earth {
     private String area;
@@ -24,7 +23,11 @@ public class Earth {
         return sea;
     }
 
-    public void setSea(Sea sea) {
-        this.sea = sea;
+    @Override
+    public String toString() {
+        return "Earth{" +
+                "area='" + area + '\'' +
+                ", sea=" + sea +
+                '}';
     }
 }
