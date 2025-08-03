@@ -1,23 +1,24 @@
 package com.example.dev.algorithm;
 
-import java.util.Arrays;
-
 public class ModeInTheArray {
     public static int findMode(int[] nums) {
-        Arrays.sort(nums);
-        int max = 0;
-        int count = 1;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == nums[i - 1]) {
+        int candidate = 0;
+        int count = 0;
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            if (candidate == num) {
                 count++;
             } else {
-                count = 1;
-            }
-            if (count > max) {
-                max = count;
+                count--;
             }
         }
-        return max;
+        return candidate;
     }
 
+    public static void main(String[] args) {
+        int[] nums = {1,1,1,2,2,3};
+        System.out.println(findMode(nums));
+    }
 }
