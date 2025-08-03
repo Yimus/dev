@@ -1,6 +1,6 @@
 package com.example.dev.algorithm;
 
-public class SumOfTheMaximumSubarray{
+public class SumOfTheMaximumSubarray {
     public static int sumOfTheMaximumSubarray(int[] nums) {
         int max = nums[0];
         int dp = nums[0];
