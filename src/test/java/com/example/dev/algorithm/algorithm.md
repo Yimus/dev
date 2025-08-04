@@ -9,3 +9,4 @@
 9. [寻找数组中的众数](ModeInTheArray.java)
 10. [扑克飞机](PokerPlane.java)
 11. [寻找峰值](FindPeakElement.java)
+12. [反转链表](InvertLinkedLists.java)
