@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.user.config.MyAppConfig;
 import com.example.user.exception.ResourceNotFoundException;
 import com.example.user.dto.User;
 import com.example.user.service.UserService;
@@ -20,8 +21,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final MyAppConfig myAppConfig;
+
+    public UserController(UserService userService, MyAppConfig myAppConfig) {
         this.userService = userService;
+        this.myAppConfig = myAppConfig;
     }
 
     @PostMapping("/user/add")
@@ -41,5 +45,10 @@ public class UserController {
         }
         LOGGER.info("get user:{}", list);
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/user/config")
+    public ResponseEntity<MyAppConfig> getUserConfig() {
+        return ResponseEntity.ok(myAppConfig);
     }
 }
