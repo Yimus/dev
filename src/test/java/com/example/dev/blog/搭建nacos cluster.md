@@ -303,7 +303,7 @@ services:
   nacos:
     image: nacos/nacos-server:latest
     container_name: nacos
-    host_name: nacos 
+    hostname: nacos 
     environment:
       - PREFER_HOST_MODE=hostname
       - MODE=standalone
@@ -330,7 +330,7 @@ services:
 
   mysql:
     container_name: mysql
-    host_name: mysql
+    hostname: mysql
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=root
