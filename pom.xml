@@ -11,9 +11,15 @@
 	<groupId>com.example</groupId>
 	<artifactId>dev</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dev</name>
+    <packaging>pom</packaging>
+    <name>dev</name>
 	<description>Demo project for Spring Boot</description>
-	<properties>
+    <modules>
+        <module>user</module>
+        <module>order</module>
+        <module>blog</module>
+    </modules>
+    <properties>
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
@@ -64,33 +70,6 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-jsqlparser</artifactId>
 			<version>3.5.12</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.shardingsphere</groupId>
-			<artifactId>shardingsphere-jdbc</artifactId>
-			<version>5.5.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.protobuf</groupId>
-					<artifactId>protobuf-java</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-					<artifactId>commons-lang</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- 显式声明安全版本覆盖传递依赖 -->
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-			<version>4.31.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.18.0</version>
 		</dependency>
 
 		<dependency>
