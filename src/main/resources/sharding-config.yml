@@ -3,9 +3,9 @@ dataSources:
   dev:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://192.168.3.7:6446/dev?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
-    username: clusteradmin
-    password: mypass
+    jdbcUrl: jdbc:mysql://192.168.3.7:3306/dev?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
     minimumIdle: 5
     maximumPoolSize: 10
     connectionTimeout: 30000
@@ -16,9 +16,9 @@ dataSources:
   ds0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
-    username: clusteradmin
-    password: mypass
+    jdbcUrl: jdbc:mysql://192.168.3.7:3306/ds0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
     minimumIdle: 5
     maximumPoolSize: 10
     connectionTimeout: 30000
@@ -29,9 +29,9 @@ dataSources:
   ds1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://192.168.3.7:6446/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
-    username: clusteradmin
-    password: mypass
+    jdbcUrl: jdbc:mysql://192.168.3.7:3306/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
     minimumIdle: 5
     maximumPoolSize: 10
     connectionTimeout: 30000
