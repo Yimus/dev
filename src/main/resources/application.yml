@@ -5,50 +5,19 @@ spring:
   application:
     name: dev
 
-  main:
-    #设置允许循环依赖
-    allow-circular-references: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.3.7:8848
+        namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
+      config:
+        server-addr: 192.168.3.7:8848
+        namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
 
-  # JMX配置
-  jmx:
-    enabled: true
+  config:
+    import:
+      - nacos:application.yml?group=dev
 
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
     url: jdbc:shardingsphere:classpath:sharding-config.yml
-
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      id-type: auto
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-
-myapp:
-  auth:
-    token: "secret-key-from-myapp"
-    expire-timeout: 30m
-  feature-flags:
-    - new-dashboard-myapp
-    - experimental-api-myapp
-
-# Spring Boot Actuator配置
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-    jmx:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-  jmx:
-    metrics:
-      export:
-        enabled: true
