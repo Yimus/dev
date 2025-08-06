@@ -2,8 +2,8 @@ package com.example.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.user.config.MyAppConfig;
+import com.example.user.entity.UserEntity;
 import com.example.user.exception.ResourceNotFoundException;
-import com.example.user.dto.User;
 import com.example.user.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -29,17 +29,17 @@ public class UserController {
     }
 
     @PostMapping("/user/add")
-    public ResponseEntity<String> addUser(@RequestBody @Valid User user) {
-        userService.save(user);
-        LOGGER.info("add user:{}", user);
+    public ResponseEntity<String> addUser(@RequestBody @Valid UserEntity userEntity) {
+        userService.save(userEntity);
+        LOGGER.info("add user:{}", userEntity);
         return ResponseEntity.ok("success");
     }
 
     @GetMapping("/user/{name}")
-    public ResponseEntity<List<User>> getUser(@PathVariable String name) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
+    public ResponseEntity<List<UserEntity>> getUser(@PathVariable String name) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("name", name);
-        List<User> list = userService.list(wrapper);
+        List<UserEntity> list = userService.list(wrapper);
         if (CollectionUtils.isEmpty(list)) {
             throw new ResourceNotFoundException("User not found with name: " + name);
         }

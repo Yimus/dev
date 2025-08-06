@@ -1,7 +1,11 @@
-package com.example.order.dto;
+package com.example.order.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-public class Orders {
+@TableName(value = "orders")
+public class OrderEntity {
+    @TableId
     private Long orderId;
 
     private String name;

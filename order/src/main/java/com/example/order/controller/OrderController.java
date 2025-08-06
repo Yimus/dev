@@ -1,7 +1,7 @@
 package com.example.order.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.order.dto.Orders;
+import com.example.order.entity.OrderEntity;
 import com.example.order.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,18 +24,18 @@ public class OrderController {
     }
 
     @PostMapping("/orders/add")
-    public ResponseEntity<String> addOrder(@RequestBody Orders orders) {
-        orderService.save(orders);
-        LOGGER.info("add order:{}", orders);
+    public ResponseEntity<String> addOrder(@RequestBody OrderEntity orderEntity) {
+        orderService.save(orderEntity);
+        LOGGER.info("add order:{}", orderEntity);
         return ResponseEntity.ok("success");
     }
 
     @PostMapping("/orders/search")
-    public ResponseEntity<List<Orders>> searchOrder(@RequestBody Orders orders) {
-        QueryWrapper<Orders> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id", orders.getUserId());
-        wrapper.eq("order_id", orders.getOrderId());
-        List<Orders> list = orderService.list(wrapper);
+    public ResponseEntity<List<OrderEntity>> searchOrder(@RequestBody OrderEntity orderEntity) {
+        QueryWrapper<OrderEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", orderEntity.getUserId());
+        wrapper.eq("order_id", orderEntity.getOrderId());
+        List<OrderEntity> list = orderService.list(wrapper);
         LOGGER.info("search order:{}", list);
         return ResponseEntity.ok(list);
     }

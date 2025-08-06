@@ -1,8 +1,8 @@
 package com.example.user;
 
-import com.example.user.dto.Earth;
-import com.example.user.dto.Sea;
-import com.example.user.dto.User;
+import com.example.user.entity.Earth;
+import com.example.user.entity.Sea;
+import com.example.user.entity.UserEntity;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -28,12 +28,12 @@ class UserApplicationTests {
         sea.setName("test sea");
         LOGGER.info("sea name:{}", sea.getName());
 
-        User user = new User();
-        user.setId(1L);
-        user.setName("test user");
-        user.setEmail("123");
-        LOGGER.info("user id:{}", user.getId());
-        LOGGER.info("user name:{}", user.getName());
-        LOGGER.info("user email:{}", user.getEmail());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(1L);
+        userEntity.setName("test user");
+        userEntity.setEmail("123");
+        LOGGER.info("user id:{}", userEntity.getId());
+        LOGGER.info("user name:{}", userEntity.getName());
+        LOGGER.info("user email:{}", userEntity.getEmail());
     }
 }

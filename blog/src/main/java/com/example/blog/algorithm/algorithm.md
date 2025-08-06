@@ -1,7 +1,7 @@
 1. [两数之和](TwoSum.java)
 2. [有效的括号](ValidParentheses.java)
 3. [合并两个有序链表](MergeTwoOrderedLinkedLists.java)
-4. [删除排序数组中的重复项](DeleteDuplicatesInSortedArrays.java)
+4. [删除有序数组中的重复项](DeleteDuplicatesInSortedArrays.java)
 5. [最大子数组和](SumOfTheMaximumSubarray.java)
 6. [爬楼梯](ClimbStairs.java)
 7. [买卖股票的最佳时机](TheBestTimeToBuyAndSellStocks.java)

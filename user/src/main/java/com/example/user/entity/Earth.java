@@ -1,4 +1,4 @@
-package com.example.user.dto;
+package com.example.user.entity;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;

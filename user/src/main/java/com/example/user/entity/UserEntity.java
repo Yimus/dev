@@ -1,12 +1,14 @@
-package com.example.user.dto;
+package com.example.user.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 
-public class User {
+@TableName(value = "user")
+public class UserEntity {
     private Long id;
 
     @NotBlank(message = "name can not be blank")
