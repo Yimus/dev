@@ -17,3 +17,4 @@
 17. [回文数](PalindromeNumbers.java)
 18. [零钱兑换](ChangeExchange.java)
 19. [打家劫舍](Loot.java)
+20. [验证二叉搜索树](ValidateTheBinarySearchTree.java)
