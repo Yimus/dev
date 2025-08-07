@@ -46,3 +46,10 @@ dubbo:
   application:
     name: UserApplication
     logger: slf4j
+    protocol: tri
+    qos-port: 22224
+  config-center:
+    address: nacos://192.168.3.7:8848
+    namespace: e111ab40-482a-4dbc-8a74-afddeb800ef2
+  metadata-report:
+    address: nacos://192.168.3.7:8848?namespace=e111ab40-482a-4dbc-8a74-afddeb800ef2
