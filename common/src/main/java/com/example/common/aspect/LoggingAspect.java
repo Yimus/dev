@@ -1,4 +1,4 @@
-package com.example.user.aspect;
+package com.example.common.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,12 +14,12 @@ public class LoggingAspect {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution(* com.example.user.controller.*.*(..))")
+    @Before("execution(* com.example.*.controller.*.*(..))")
     public void logBeforeController(JoinPoint joinPoint) {
         LOGGER.info("-- {} start --", joinPoint.getSignature().getName());
     }
 
-    @Around("execution(* com.example.user.controller.*.*(..))")
+    @Around("execution(* com.example.*.controller.*.*(..))")
     public Object spendTimeByController(ProceedingJoinPoint joinPoint) throws Throwable{
         long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
@@ -28,12 +28,12 @@ public class LoggingAspect {
         return proceed;
     }
 
-    @After("execution(* com.example.user.controller.*.*(..))")
+    @After("execution(* com.example.*.controller.*.*(..))")
     public void logAfterController(JoinPoint joinPoint) {
         LOGGER.info("-- {} end --", joinPoint.getSignature().getName());
     }
 
-    @AfterThrowing(pointcut = "execution(* com.example.user.controller.*.*(..))", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* com.example.*.controller.*.*(..))", throwing = "ex")
     public void logAfterThrowingController(JoinPoint joinPoint, Throwable ex) {
         LOGGER.error("-- {} throw exception--", joinPoint.getSignature().getName(), ex);
     }

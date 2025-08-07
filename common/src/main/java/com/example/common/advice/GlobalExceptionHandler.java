@@ -1,6 +1,6 @@
-package com.example.user.advice;
+package com.example.common.advice;
 
-import com.example.user.exception.ResourceNotFoundException;
+import com.example.common.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

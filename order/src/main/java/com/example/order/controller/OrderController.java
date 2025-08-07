@@ -1,14 +1,12 @@
 package com.example.order.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.order.entity.OrderEntity;
+import com.example.common.entity.OrderEntity;
 import com.example.order.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +36,19 @@ public class OrderController {
         List<OrderEntity> list = orderService.list(wrapper);
         LOGGER.info("search order:{}", list);
         return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/orders/user/{id}")
+    public ResponseEntity<List<OrderEntity>> getOrderByUserId(@PathVariable Long id) {
+        List<OrderEntity> list = orderService.list(new QueryWrapper<OrderEntity>().eq("user_id", id));
+        LOGGER.info("get order by user id:{}", list);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/orders/order/{id}")
+    public ResponseEntity<OrderEntity> getOrderByOrderId(@PathVariable Long id) {
+        OrderEntity order = orderService.getById(id);
+        LOGGER.info("get order by order id:{}", order);
+        return ResponseEntity.ok(order);
     }
 }

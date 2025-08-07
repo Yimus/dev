@@ -1,0 +1,61 @@
+package com.example.common;
+
+import com.example.common.dto.OrderDTO;
+import com.example.common.entity.Earth;
+import com.example.common.entity.OrderEntity;
+import com.example.common.entity.Sea;
+import com.example.common.entity.UserEntity;
+import jakarta.annotation.Resource;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+
+
+@SpringBootTest
+class CommonApplicationTests {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(CommonApplicationTests.class);
+
+    @Resource
+    private Earth earth;
+
+    @Test
+    void contextLoads() {
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderId(1L);
+        orderEntity.setName("test order");
+        orderEntity.setUserId(1L);
+        LOGGER.info("order id:{}", orderEntity.getOrderId());
+        LOGGER.info("order name:{}", orderEntity.getName());
+        LOGGER.info("order user id:{}", orderEntity.getUserId());
+
+        earth.setArea("test area");
+        LOGGER.info("earth area:{}", earth.getArea());
+        LOGGER.info("earth sea:{}", earth.getSea());
+        LOGGER.info("earth sea:{}", earth.getSea());
+        Sea sea = earth.getSea();
+        sea.setName("test sea");
+        LOGGER.info("sea name:{}", sea.getName());
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(1L);
+        userEntity.setName("test user");
+        userEntity.setEmail("123");
+        LOGGER.info("user id:{}", userEntity.getId());
+        LOGGER.info("user name:{}", userEntity.getName());
+        LOGGER.info("user email:{}", userEntity.getEmail());
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(1L);
+        orderDTO.setGoodName("test good");
+        orderDTO.setUserId(1L);
+        orderDTO.setUserName("test user");
+        orderDTO.setUserEmail("123");
+        LOGGER.info("order dto id:{}", orderDTO.getOrderId());
+        LOGGER.info("order dto good name:{}", orderDTO.getGoodName());
+        LOGGER.info("order dto user id:{}", orderDTO.getUserId());
+        LOGGER.info("order dto user name:{}", orderDTO.getUserName());
+        LOGGER.info("order dto user email:{}", orderDTO.getUserEmail());
+    }
+}

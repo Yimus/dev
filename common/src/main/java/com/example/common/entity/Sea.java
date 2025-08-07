@@ -1,4 +1,4 @@
-package com.example.user.entity;
+package com.example.common.entity;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
