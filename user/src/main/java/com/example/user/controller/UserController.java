@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.dto.OrderDTO;
+import com.example.common.dubbo.OrderDubboService;
 import com.example.common.entity.OrderEntity;
 import com.example.common.entity.UserEntity;
 import com.example.common.exception.ResourceNotFoundException;
@@ -9,6 +10,7 @@ import com.example.user.config.MyAppConfig;
 import com.example.user.feign.OrderFeignClient;
 import com.example.user.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ public class UserController {
     private final MyAppConfig myAppConfig;
 
     private final OrderFeignClient orderFeignClient;
+
+    @DubboReference
+    private OrderDubboService orderDubboService;
 
     public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient) {
         this.userService = userService;
@@ -58,10 +63,21 @@ public class UserController {
         return ResponseEntity.ok(myAppConfig);
     }
 
-    @GetMapping("/user/orders/{name}")
-    public ResponseEntity<List<OrderDTO>> getUserOrders(@PathVariable String name) {
+    @GetMapping("/user/orders/feign/{name}")
+    public ResponseEntity<List<OrderDTO>> getUserOrdersByFeign(@PathVariable String name) {
         UserEntity user = userService.getOne(new QueryWrapper<UserEntity>().eq("name", name));
         List<OrderEntity> orders = orderFeignClient.getOrderByUserId(user.getId());
+        return createOrderDTOResp(user, orders);
+    }
+
+    @GetMapping("/user/orders/dubbo/{name}")
+    public ResponseEntity<List<OrderDTO>> getUserOrdersByDubbo(@PathVariable String name) {
+        UserEntity user = userService.getOne(new QueryWrapper<UserEntity>().eq("name", name));
+        List<OrderEntity> orders = orderDubboService.getOrderByUserId(user.getId());
+        return createOrderDTOResp(user, orders);
+    }
+
+    private ResponseEntity<List<OrderDTO>> createOrderDTOResp(UserEntity user, List<OrderEntity> orders) {
         return ResponseEntity.ok(orders.stream()
                 .map(o -> {
                     OrderDTO orderDTO = new OrderDTO();

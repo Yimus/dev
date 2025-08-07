@@ -21,3 +21,16 @@ spring:
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
     url: jdbc:shardingsphere:nacos:shardingsphere.yaml?serverAddr=192.168.3.7:8848&namespace=a8dc33a7-07f7-420f-901e-79f09136ed05&group=order
+
+dubbo:
+  registry:
+    address: nacos://192.168.3.7:8848?namespace=a8dc33a7-07f7-420f-901e-79f09136ed05
+    # This will enable application-level service discovery only (the recommended service discovery method for Dubbo3).
+    # For users upgrading from Dubbo2.x, please set the value to 'all' for smooth migration.
+    register-mode: instance
+  protocol:
+    name: tri
+    port: 50052
+  application:
+    name: OrderApplication
+    logger: slf4j

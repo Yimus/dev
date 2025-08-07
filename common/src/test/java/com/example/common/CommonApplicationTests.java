@@ -1,10 +1,7 @@
 package com.example.common;
 
 import com.example.common.dto.OrderDTO;
-import com.example.common.entity.Earth;
-import com.example.common.entity.OrderEntity;
-import com.example.common.entity.Sea;
-import com.example.common.entity.UserEntity;
+import com.example.common.entity.*;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -57,5 +54,13 @@ class CommonApplicationTests {
         LOGGER.info("order dto user id:{}", orderDTO.getUserId());
         LOGGER.info("order dto user name:{}", orderDTO.getUserName());
         LOGGER.info("order dto user email:{}", orderDTO.getUserEmail());
+
+        InventoryEntity inventoryEntity = new InventoryEntity();
+        inventoryEntity.setId(1L);
+        inventoryEntity.setName("test inventory");
+        inventoryEntity.setCount(100L);
+        LOGGER.info("inventory id:{}", inventoryEntity.getId());
+        LOGGER.info("inventory name:{}", inventoryEntity.getName());
+        LOGGER.info("inventory count:{}", inventoryEntity.getCount());
     }
 }
