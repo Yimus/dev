@@ -1,9 +1,12 @@
 package com.example.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.common.dto.OrderDTO;
+import com.example.common.entity.OrderEntity;
+import com.example.common.entity.UserEntity;
+import com.example.common.exception.ResourceNotFoundException;
 import com.example.user.config.MyAppConfig;
-import com.example.user.entity.UserEntity;
-import com.example.user.exception.ResourceNotFoundException;
+import com.example.user.feign.OrderFeignClient;
 import com.example.user.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -23,9 +26,12 @@ public class UserController {
 
     private final MyAppConfig myAppConfig;
 
-    public UserController(UserService userService, MyAppConfig myAppConfig) {
+    private final OrderFeignClient orderFeignClient;
+
+    public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient) {
         this.userService = userService;
         this.myAppConfig = myAppConfig;
+        this.orderFeignClient = orderFeignClient;
     }
 
     @PostMapping("/user/add")
@@ -50,5 +56,22 @@ public class UserController {
     @GetMapping("/user/config")
     public ResponseEntity<MyAppConfig> getUserConfig() {
         return ResponseEntity.ok(myAppConfig);
+    }
+
+    @GetMapping("/user/orders/{name}")
+    public ResponseEntity<List<OrderDTO>> getUserOrders(@PathVariable String name) {
+        UserEntity user = userService.getOne(new QueryWrapper<UserEntity>().eq("name", name));
+        List<OrderEntity> orders = orderFeignClient.getOrderByUserId(user.getId());
+        return ResponseEntity.ok(orders.stream()
+                .map(o -> {
+                    OrderDTO orderDTO = new OrderDTO();
+                    orderDTO.setOrderId(o.getOrderId());
+                    orderDTO.setGoodName(o.getName());
+                    orderDTO.setUserId(user.getId());
+                    orderDTO.setUserName(user.getName());
+                    orderDTO.setUserEmail(user.getEmail());
+                    return orderDTO;
+                })
+                .toList());
     }
 }
