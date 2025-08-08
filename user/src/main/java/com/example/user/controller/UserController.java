@@ -2,7 +2,9 @@ package com.example.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.dto.OrderDTO;
+import com.example.common.dubbo.InventoryDubboService;
 import com.example.common.dubbo.OrderDubboService;
+import com.example.common.entity.InventoryEntity;
 import com.example.common.entity.OrderEntity;
 import com.example.common.entity.UserEntity;
 import com.example.common.exception.ResourceNotFoundException;
@@ -32,6 +34,9 @@ public class UserController {
 
     @DubboReference
     private OrderDubboService orderDubboService;
+
+    @DubboReference
+    private InventoryDubboService inventoryDubboService;
 
     public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient) {
         this.userService = userService;
@@ -75,6 +80,24 @@ public class UserController {
         UserEntity user = userService.getOne(new QueryWrapper<UserEntity>().eq("name", name));
         List<OrderEntity> orders = orderDubboService.getOrderByUserId(user.getId());
         return createOrderDTOResp(user, orders);
+    }
+
+    @PostMapping("/user/create/order")
+    public ResponseEntity<String> createOrder(@RequestBody OrderEntity orderEntity) {
+        InventoryEntity inventory = inventoryDubboService.getInventoryByName(orderEntity.getName());
+        if (inventory == null || inventory.getCount() == 0) {
+            return ResponseEntity.ok("inventory is not enough");
+        }
+        int created = orderDubboService.creatOrder(orderEntity);
+        if (created == 0) {
+            return ResponseEntity.ok("create order failed");
+        }
+        inventory.setCount(inventory.getCount() - 1);
+        int updated = inventoryDubboService.updateInventory(inventory);
+        if (updated == 0) {
+            return ResponseEntity.ok("update inventory failed");
+        }
+        return ResponseEntity.ok("success");
     }
 
     private ResponseEntity<List<OrderDTO>> createOrderDTOResp(UserEntity user, List<OrderEntity> orders) {

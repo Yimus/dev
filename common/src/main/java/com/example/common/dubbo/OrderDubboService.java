@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface OrderDubboService {
     List<OrderEntity> getOrderByUserId(Long id);
+
+    int creatOrder(OrderEntity order);
 }

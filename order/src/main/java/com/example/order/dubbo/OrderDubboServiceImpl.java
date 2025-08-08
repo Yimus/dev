@@ -21,4 +21,8 @@ public class OrderDubboServiceImpl implements OrderDubboService {
     public List<OrderEntity> getOrderByUserId(Long id) {
         return orderMapper.selectList(new QueryWrapper<OrderEntity>().eq("user_id", id));
     }
+
+    public int creatOrder(OrderEntity order) {
+        return orderMapper.insert(order);
+    }
 }
