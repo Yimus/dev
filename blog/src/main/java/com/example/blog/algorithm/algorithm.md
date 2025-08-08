@@ -19,3 +19,4 @@
 19. [打家劫舍](Loot.java)
 20. [验证二叉搜索树](ValidateTheBinarySearchTree.java)
 21. [无重复字符的最长子串](LengthOfLongestSubstring.java)
+22. [盛最多水的容器](MaxArea.java)
