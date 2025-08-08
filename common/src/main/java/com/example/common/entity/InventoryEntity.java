@@ -2,8 +2,10 @@ package com.example.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.Serializable;
+
 @TableName(value = "inventory")
-public class InventoryEntity {
+public class InventoryEntity implements Serializable {
     private Long id;
 
     private String name;

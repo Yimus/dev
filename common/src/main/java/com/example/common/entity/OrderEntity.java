@@ -3,8 +3,10 @@ package com.example.common.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.Serializable;
+
 @TableName(value = "orders")
-public class OrderEntity {
+public class OrderEntity implements Serializable {
     @TableId
     private Long orderId;
 

@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serializable;
+
 
 @TableName(value = "user")
-public class UserEntity {
+public class UserEntity implements Serializable {
     private Long id;
 
     @NotBlank(message = "name can not be blank")
