@@ -8,19 +8,19 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.3.7:8848
+        server-addr: 127.0.0.1:8848
         namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
       config:
-        server-addr: 192.168.3.7:8848
+        server-addr: 127.0.0.1:8848
         namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
 
   config:
     import:
-      - nacos:application.yml?group=inventory
+      - nacos:application.yml?group=dev
 
 dubbo:
   registry:
-    address: nacos://192.168.3.7:8848
+    address: nacos://127.0.0.1:8848
     # This will enable application-level service discovery only (the recommended service discovery method for Dubbo3).
     # For users upgrading from Dubbo2.x, please set the value to 'all' for smooth migration.
     register-mode: instance
