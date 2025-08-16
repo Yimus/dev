@@ -23,3 +23,4 @@
 23. [三数之和](ThreeSum.java)
 24. [电话号码的字母组合](LetterCombinations.java)
 25. [字母异位词分组](GroupAnagrams.java)
+26. [最长连续序列](LongestConsecutive.java)
