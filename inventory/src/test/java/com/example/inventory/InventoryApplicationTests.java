@@ -1,6 +1,7 @@
-package com.example.common;
+package com.example.inventory;
 
 import com.example.common.dto.OrderDTO;
+import com.example.common.dubbo.InventoryDubboService;
 import com.example.common.entity.*;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -8,14 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 @SpringBootTest
-class CommonApplicationTests {
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(CommonApplicationTests.class);
+public class InventoryApplicationTests {
+    public static final Logger LOGGER = LoggerFactory.getLogger(InventoryApplicationTests.class);
 
     @Resource
     private Earth earth;
+
+    @Resource
+    InventoryDubboService inventoryDubboService;
 
     @Test
     void contextLoads() {
@@ -62,5 +64,11 @@ class CommonApplicationTests {
         LOGGER.info("inventory id:{}", inventoryEntity.getId());
         LOGGER.info("inventory name:{}", inventoryEntity.getName());
         LOGGER.info("inventory count:{}", inventoryEntity.getCount());
+    }
+
+    @Test
+    public void testInventoryDubboService () {
+        InventoryEntity inventory = inventoryDubboService.getInventoryByName("可口可乐");
+        LOGGER.info("inventory:{}", inventory);
     }
 }
