@@ -13,6 +13,8 @@ import com.example.user.feign.OrderFeignClient;
 import com.example.user.service.UserService;
 import jakarta.validation.Valid;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -32,16 +34,19 @@ public class UserController {
 
     private final OrderFeignClient orderFeignClient;
 
+    private final RedissonClient redissonClient;
+
     @DubboReference
     private OrderDubboService orderDubboService;
 
     @DubboReference
     private InventoryDubboService inventoryDubboService;
 
-    public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient) {
+    public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient, RedissonClient redissonClient) {
         this.userService = userService;
         this.myAppConfig = myAppConfig;
         this.orderFeignClient = orderFeignClient;
+        this.redissonClient = redissonClient;
     }
 
     @PostMapping("/user/add")
@@ -84,20 +89,32 @@ public class UserController {
 
     @PostMapping("/user/create/order")
     public ResponseEntity<String> createOrder(@RequestBody OrderEntity orderEntity) {
-        InventoryEntity inventory = inventoryDubboService.getInventoryByName(orderEntity.getName());
-        if (inventory == null || inventory.getCount() == 0) {
-            return ResponseEntity.ok("inventory is not enough");
+        RLock lock = redissonClient.getLock("create:order:key:" + orderEntity.getUserId() + ":" + orderEntity.getName());
+        boolean isLocked = false;
+        try {
+            isLocked = lock.tryLock();
+            if (!isLocked) {
+                return ResponseEntity.ok("lock failed");
+            }
+            InventoryEntity inventory = inventoryDubboService.getInventoryByName(orderEntity.getName());
+            if (inventory == null || inventory.getCount() == 0) {
+                return ResponseEntity.ok("inventory is not enough");
+            }
+            int created = orderDubboService.creatOrder(orderEntity);
+            if (created == 0) {
+                return ResponseEntity.ok("create order failed");
+            }
+            inventory.setCount(inventory.getCount() - 1);
+            int updated = inventoryDubboService.updateInventory(inventory);
+            if (updated == 0) {
+                return ResponseEntity.ok("update inventory failed");
+            }
+            return ResponseEntity.ok("success");
+        } finally {
+            if (isLocked) {
+                lock.unlock();
+            }
         }
-        int created = orderDubboService.creatOrder(orderEntity);
-        if (created == 0) {
-            return ResponseEntity.ok("create order failed");
-        }
-        inventory.setCount(inventory.getCount() - 1);
-        int updated = inventoryDubboService.updateInventory(inventory);
-        if (updated == 0) {
-            return ResponseEntity.ok("update inventory failed");
-        }
-        return ResponseEntity.ok("success");
     }
 
     private ResponseEntity<List<OrderDTO>> createOrderDTOResp(UserEntity user, List<OrderEntity> orders) {
