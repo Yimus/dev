@@ -10,7 +10,7 @@ public class InventoryEntity implements Serializable {
 
     private String name;
 
-    private Long count;
+    private long count;
 
     public Long getId() {
         return id;
@@ -20,11 +20,11 @@ public class InventoryEntity implements Serializable {
         this.id = id;
     }
 
-    public Long getCount() {
+    public long getCount() {
         return count;
     }
 
-    public void setCount(Long count) {
+    public void setCount(long count) {
         this.count = count;
     }
 
