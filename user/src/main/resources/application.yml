@@ -19,6 +19,7 @@ spring:
   config:
     import:
       - nacos:application.yml?group=dev
+      - nacos:datasource.yml?group=dev
 
   cache:
     type: caffeine
