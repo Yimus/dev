@@ -9,10 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 
 @SpringBootTest
@@ -23,6 +24,9 @@ class UserApplicationTests {
     @Resource
     UserController userController;
 
+    @Resource
+    ThreadPoolExecutor threadPoolExecutor;
+
     @Test
     void contextLoads() {
         LOGGER.info("user application test");
@@ -30,25 +34,31 @@ class UserApplicationTests {
 
     @Test
     void testLock() {
-        try (ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(100, 100, 1L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100))) {
-            CountDownLatch countDownLatch = new CountDownLatch(1);
-            for (int i = 0; i < 100; i++) {
-                threadPoolExecutor.execute(() -> {
-                    OrderEntity orderEntity = new OrderEntity();
-                    orderEntity.setUserId(1L);
-                    orderEntity.setName("可口可乐");
-                    try {
-                        countDownLatch.await();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                    ResponseEntity<String> response = userController.createOrder(orderEntity);
-                    LOGGER.info("create order:{}", response);
-                });
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        List<Future<ResponseEntity<String>>> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Future<ResponseEntity<String>> future = threadPoolExecutor.submit(() -> {
+                OrderEntity orderEntity = new OrderEntity();
+                orderEntity.setUserId(2L);
+                orderEntity.setName("可口可乐");
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                return userController.createOrder(orderEntity);
+            });
+            list.add(future);
+        }
+        countDownLatch.countDown();
+        for (Future<ResponseEntity<String>> future : list) {
+            ResponseEntity<String> response = null;
+            try {
+                response = future.get();
+            } catch (Exception e) {
+                LOGGER.error("get response error", e);
             }
-            countDownLatch.countDown();
-        } catch (Exception e) {
-            LOGGER.error("test lock error", e);
+            LOGGER.info("response:{}", response);
         }
     }
 }

@@ -17,6 +17,7 @@ spring:
   config:
     import:
       - nacos:application.yml?group=dev
+      - nacos:dynamictp.yml?group=dev
 
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver

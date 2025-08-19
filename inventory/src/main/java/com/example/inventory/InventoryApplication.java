@@ -1,6 +1,7 @@
 package com.example.inventory;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.dromara.dynamictp.spring.annotation.EnableDynamicTp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 
 @EnableDubbo
+@EnableDynamicTp
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableAspectJAutoProxy

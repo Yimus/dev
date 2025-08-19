@@ -18,6 +18,7 @@ spring:
     import:
       - nacos:application.yml?group=dev
       - nacos:datasource.yml?group=dev
+      - nacos:dynamictp.yml?group=dev
 
 dubbo:
   registry:
