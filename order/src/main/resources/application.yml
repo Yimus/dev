@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 6030
 
 spring:
   application:
@@ -16,8 +16,8 @@ spring:
 
   config:
     import:
-      - nacos:application.yml?group=dev
-      - nacos:dynamictp.yml?group=dev
+      - nacos:common.yml?group=dev
+      - nacos:mybatis.yml?group=dev
 
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver

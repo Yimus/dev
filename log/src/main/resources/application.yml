@@ -1,0 +1,20 @@
+server:
+  port: 6020
+
+spring:
+  application:
+    name: log
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: a8dc33a7-07f7-420f-901e-79f09136ed05
+
+  config:
+    import:
+      - nacos:common.yml?group=dev
+      - nacos:rocketmq.yml?group=dev

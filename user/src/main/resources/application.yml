@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 6040
 
 spring:
   application:
@@ -18,9 +18,12 @@ spring:
 
   config:
     import:
-      - nacos:application.yml?group=dev
+      - nacos:common.yml?group=dev
       - nacos:datasource.yml?group=dev
       - nacos:dynamictp.yml?group=dev
+      - nacos:mybatis.yml?group=dev
+      - nacos:redisson.yml?group=dev
+      - nacos:rocketmq.yml?group=dev
 
   cache:
     type: caffeine

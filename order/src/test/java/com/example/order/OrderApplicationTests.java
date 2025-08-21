@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class OrderApplicationTests {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(OrderApplicationTests.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderApplicationTests.class);
 
     @DubboReference
     UserDubboService userDubboService;

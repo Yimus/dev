@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class InventoryApplicationTests {
-    public static final Logger LOGGER = LoggerFactory.getLogger(InventoryApplicationTests.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryApplicationTests.class);
 
     @Resource
     private Earth earth;

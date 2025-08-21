@@ -1,20 +1,16 @@
-package com.example.order;
+package com.example.log;
 
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@EnableDubbo
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"com.example.common", "com.example.order"})
-public class OrderApplication {
+public class LogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OrderApplication.class, args);
+		SpringApplication.run(LogApplication.class, args);
 	}
 }

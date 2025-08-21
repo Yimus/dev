@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class OrderController {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     private final OrderService orderService;
 

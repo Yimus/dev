@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    public static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 

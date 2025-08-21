@@ -105,7 +105,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
-      - "3309:3306"
+      - "3306:3306"
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s

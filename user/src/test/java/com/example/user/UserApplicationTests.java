@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @SpringBootTest
 class UserApplicationTests {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(UserApplicationTests.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserApplicationTests.class);
 
     @Resource
     UserController userController;
