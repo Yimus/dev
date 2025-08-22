@@ -10,9 +10,12 @@ import com.example.common.entity.UserEntity;
 import com.example.common.exception.ResourceNotFoundException;
 import com.example.user.config.MyAppConfig;
 import com.example.user.feign.OrderFeignClient;
+import com.example.user.rocket.RocketService;
 import com.example.user.service.UserService;
 import jakarta.validation.Valid;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.rocketmq.client.producer.LocalTransactionState;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -36,17 +39,20 @@ public class UserController {
 
     private final RedissonClient redissonClient;
 
+    private final RocketService rocketService;
+
     @DubboReference
     private OrderDubboService orderDubboService;
 
     @DubboReference
     private InventoryDubboService inventoryDubboService;
 
-    public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient, RedissonClient redissonClient) {
+    public UserController(UserService userService, MyAppConfig myAppConfig, OrderFeignClient orderFeignClient, RedissonClient redissonClient, RocketService rocketService) {
         this.userService = userService;
         this.myAppConfig = myAppConfig;
         this.orderFeignClient = orderFeignClient;
         this.redissonClient = redissonClient;
+        this.rocketService = rocketService;
     }
 
     @PostMapping("/user/add")
@@ -108,6 +114,10 @@ public class UserController {
             int updated = inventoryDubboService.updateInventory(inventory);
             if (updated == 0) {
                 return ResponseEntity.ok("update inventory failed");
+            }
+            TransactionSendResult transactionSendResult = rocketService.sendTransactionMessage("inventory-transaction", "create", "create order success userId : " + orderEntity.getUserId() + ", name : " + orderEntity.getName(), orderEntity.getUserId() + ":" + orderEntity.getName());
+            if (transactionSendResult != null && transactionSendResult.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE)) {
+                LOGGER.info("rocketmq transaction send success");
             }
             return ResponseEntity.ok("success");
         } finally {
